@@ -25,15 +25,17 @@ import { ProductInputSchema, ProductUpdateSchema } from '@/lib/validator'
 import { Checkbox } from '@/components/ui/checkbox'
 import { toSlug } from '@/lib/utils'
 import { IProductInput } from '@/types'
+import { Trash } from 'lucide-react'
+import { useState } from 'react'
 
 const productDefaultValues: IProductInput =
   process.env.NODE_ENV === 'development'
     ? {
-        name: 'Sample Product',
-        slug: 'sample-product',
-        category: 'Sample Category',
-        images: ['/images/p11-1.jpg'],
-        brand: 'Sample Brand',
+        name: '',
+        slug: '',
+        category: '',
+        images: [],
+        brand: '',
         description: 'This is a sample description of the product.',
         price: 99.99,
         listPrice: 0,
@@ -122,6 +124,9 @@ const ProductForm = ({
     }
   }
   const images = form.watch('images')
+  const [sizeInput, setSizeInput] = useState('')
+  const [colorInput, setColorInput] = useState('')
+  const [tagInput, setTagInput] = useState('')
 
   return (
     <Form {...form}>
@@ -197,9 +202,9 @@ const ProductForm = ({
             name='brand'
             render={({ field }) => (
               <FormItem className='w-full'>
-                <FormLabel>Brand</FormLabel>
+                <FormLabel>SKU</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter product brand' {...field} />
+                  <Input placeholder='Enter product sku' {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -252,6 +257,210 @@ const ProductForm = ({
             )}
           />
         </div>
+        <div className='flex flex-col gap-5 md:flex-row'>
+          {/* Sizes Field */}
+          <FormField
+            control={form.control}
+            name='sizes'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Sizes</FormLabel>
+                <div className='flex items-center space-x-2'>
+                  <Input
+                    placeholder='Add a size (e.g. S, M, L)'
+                    value={sizeInput}
+                    onChange={(e) => setSizeInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && sizeInput.trim()) {
+                        e.preventDefault()
+                        if (!field.value.includes(sizeInput)) {
+                          form.setValue('sizes', [
+                            ...field.value,
+                            sizeInput.trim(),
+                          ])
+                        }
+                        setSizeInput('')
+                      }
+                    }}
+                  />
+                  <Button
+                    type='button'
+                    onClick={() => {
+                      if (
+                        sizeInput.trim() &&
+                        !field.value.includes(sizeInput)
+                      ) {
+                        form.setValue('sizes', [
+                          ...field.value,
+                          sizeInput.trim(),
+                        ])
+                        setSizeInput('')
+                      }
+                    }}
+                  >
+                    Add
+                  </Button>
+                </div>
+                <div className='flex flex-wrap gap-2 mt-2'>
+                  {field.value.map((size) => (
+                    <span
+                      key={size}
+                      className='px-3 py-1 text-sm bg-muted rounded-full flex items-center gap-1'
+                    >
+                      {size}
+                      <button
+                        type='button'
+                        onClick={() =>
+                          form.setValue(
+                            'sizes',
+                            field.value.filter((s) => s !== size)
+                          )
+                        }
+                      >
+                        &times;
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* </div>
+        <div className='flex flex-col gap-5 md:flex-row'> */}
+          {/* color Field */}
+          <FormField
+            control={form.control}
+            name='colors'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Colors</FormLabel>
+                <div className='flex items-center space-x-2'>
+                  <Input
+                    placeholder='Add a color'
+                    value={colorInput}
+                    onChange={(e) => setColorInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && colorInput.trim()) {
+                        e.preventDefault()
+                        if (!field.value.includes(colorInput)) {
+                          form.setValue('colors', [
+                            ...field.value,
+                            colorInput.trim(),
+                          ])
+                        }
+                        setColorInput('')
+                      }
+                    }}
+                  />
+                  <Button
+                    type='button'
+                    onClick={() => {
+                      if (
+                        colorInput.trim() &&
+                        !field.value.includes(colorInput)
+                      ) {
+                        form.setValue('colors', [
+                          ...field.value,
+                          colorInput.trim(),
+                        ])
+                        setColorInput('')
+                      }
+                    }}
+                  >
+                    Add
+                  </Button>
+                </div>
+                <div className='flex flex-wrap gap-2 mt-2'>
+                  {field.value.map((color) => (
+                    <span
+                      key={color}
+                      className='px-3 py-1 text-sm bg-muted rounded-full flex items-center gap-1'
+                    >
+                      {color}
+                      <button
+                        type='button'
+                        onClick={() =>
+                          form.setValue(
+                            'colors',
+                            field.value.filter((s) => s !== color)
+                          )
+                        }
+                      >
+                        &times;
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='tags'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tags</FormLabel>
+                <div className='flex items-center space-x-2'>
+                  <Input
+                    placeholder='Add tag (e.g. New, Best Seller)'
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && tagInput.trim()) {
+                        e.preventDefault()
+                        if (!field.value.includes(tagInput.trim())) {
+                          form.setValue('tags', [
+                            ...field.value,
+                            tagInput.trim(),
+                          ])
+                        }
+                        setTagInput('')
+                      }
+                    }}
+                  />
+                  <Button
+                    type='button'
+                    onClick={() => {
+                      if (
+                        tagInput.trim() &&
+                        !field.value.includes(tagInput.trim())
+                      ) {
+                        form.setValue('tags', [...field.value, tagInput.trim()])
+                        setTagInput('')
+                      }
+                    }}
+                  >
+                    Add
+                  </Button>
+                </div>
+                <div className='flex flex-wrap gap-2 mt-2'>
+                  {field.value.map((tag) => (
+                    <span
+                      key={tag}
+                      className='px-3 py-1 text-sm bg-muted rounded-full flex items-center gap-1'
+                    >
+                      {tag}
+                      <button
+                        type='button'
+                        onClick={() =>
+                          form.setValue(
+                            'tags',
+                            field.value.filter((t) => t !== tag)
+                          )
+                        }
+                      >
+                        &times;
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div className='flex flex-col gap-5 md:flex-row'>
           <FormField
@@ -264,14 +473,29 @@ const ProductForm = ({
                   <CardContent className='space-y-2 mt-2 min-h-48'>
                     <div className='flex justify-start items-center space-x-2'>
                       {images.map((image: string) => (
-                        <Image
-                          key={image}
-                          src={image}
-                          alt='product image'
-                          className='w-20 h-20 object-cover object-center rounded-sm'
-                          width={100}
-                          height={100}
-                        />
+                        <Card key={image} className='relative '>
+                          <Image
+                            src={image}
+                            alt='product image'
+                            className='w-36 h-36 object-cover object-center rounded-sm'
+                            width={100}
+                            height={100}
+                          />
+                          <Button
+                            variant={'destructive'}
+                            className='absolute top-1 right-1'
+                            type='button'
+                            size='icon'
+                            onClick={() => {
+                              form.setValue(
+                                'images',
+                                images.filter((img) => img !== image)
+                              )
+                            }}
+                          >
+                            <Trash />
+                          </Button>
+                        </Card>
                       ))}
                       <FormControl>
                         <UploadButton

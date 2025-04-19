@@ -22,7 +22,7 @@ export default async function ProfilePage() {
         <div className='flex gap-2 '>
           <Link href='/account'>Your Account</Link>
           <span>›</span>
-          <Link href='/account/manage'>Login & Security</Link>
+          <Link href='/account/manage'>User Details</Link>
           <span>›</span>
           <span>{PAGE_TITLE}</span>
         </div>

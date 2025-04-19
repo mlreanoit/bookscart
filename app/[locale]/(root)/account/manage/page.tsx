@@ -8,7 +8,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 
-const PAGE_TITLE = 'Login & Security'
+const PAGE_TITLE = 'Your Details'
 export const metadata: Metadata = {
   title: PAGE_TITLE,
 }
@@ -42,10 +42,10 @@ export default async function ProfilePage() {
             <div>
               <h3 className='font-bold'>Email</h3>
               <p>{session?.user.email}</p>
-              <p>will be implemented in the next version</p>
+              {/* <p>will be implemented in the next version</p> */}
             </div>
             <div>
-              <Link href='#'>
+              {/* <Link href='#'>
                 <Button
                   disabled
                   className='rounded-full w-32'
@@ -53,11 +53,11 @@ export default async function ProfilePage() {
                 >
                   Edit
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </CardContent>
           <Separator />
-          <CardContent className='p-4 flex justify-between flex-wrap'>
+          {/* <CardContent className='p-4 flex justify-between flex-wrap'>
             <div>
               <h3 className='font-bold'>Password</h3>
               <p>************</p>
@@ -74,7 +74,7 @@ export default async function ProfilePage() {
                 </Button>
               </Link>
             </div>
-          </CardContent>
+          </CardContent> */}
         </Card>
       </SessionProvider>
     </div>

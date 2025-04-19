@@ -37,25 +37,23 @@ export default function AccountPage() {
                 <User className='w-12 h-12' />
               </div>
               <div>
-                <h2 className='text-xl font-bold'>Login & security</h2>
-                <p className='text-muted-foreground'>
-                  Manage password, email and mobile number
-                </p>
+                <h2 className='text-xl font-bold'>Your Details</h2>
+                <p className='text-muted-foreground'>Include name and email</p>
               </div>
             </CardContent>
           </Link>
         </Card>
 
         <Card>
-          <Link href='/account/addresses'>
+          <Link href='/'>
             <CardContent className='flex items-start gap-4 p-6'>
               <div>
                 <Home className='w-12 h-12' />
               </div>
               <div>
-                <h2 className='text-xl font-bold'>Addresses</h2>
+                <h2 className='text-xl font-bold'>Shop Now</h2>
                 <p className='text-muted-foreground'>
-                  Edit, remove or set default address
+                  Enjoy shopping with us. We have a lot of products for you.
                 </p>
               </div>
             </CardContent>

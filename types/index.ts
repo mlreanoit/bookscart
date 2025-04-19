@@ -53,6 +53,7 @@ export type Data = {
 }
 // Order
 export type IOrderInput = z.infer<typeof OrderInputSchema>
+
 export type IOrderList = IOrderInput & {
   _id: string
   user: {

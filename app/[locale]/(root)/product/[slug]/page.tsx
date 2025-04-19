@@ -56,6 +56,7 @@ export default async function ProductDetails(props: {
   })
 
   const t = await getTranslations()
+
   return (
     <div>
       <AddToBrowsingHistory id={product._id} category={product.category} />
