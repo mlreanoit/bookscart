@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-
+import { redirect } from 'next/navigation'
 import { auth } from '@/auth'
 import DeleteDialog from '@/components/shared/delete-dialog'
 import Pagination from '@/components/shared/pagination'
@@ -29,8 +29,9 @@ export default async function OrdersPage(props: {
   const { page = '1' } = searchParams
 
   const session = await auth()
-  if (session?.user.role !== 'Admin')
-    throw new Error('Admin permission required')
+  if (session?.user.role !== 'Admin') {
+    redirect('/') // Redirect non-admin users to the home page
+  }
 
   const orders = await getAllOrders({
     page: Number(page),

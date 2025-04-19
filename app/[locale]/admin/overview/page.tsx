@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-
+import { redirect } from 'next/navigation'
 import OverviewReport from './overview-report'
 import { auth } from '@/auth'
 export const metadata: Metadata = {
@@ -7,8 +7,10 @@ export const metadata: Metadata = {
 }
 const DashboardPage = async () => {
   const session = await auth()
-  if (session?.user.role !== 'Admin')
-    throw new Error('Admin permission required')
+  // ✅ Redirect to home if not admin
+  if (session?.user.role !== 'Admin') {
+    redirect('/')
+  }
 
   return <OverviewReport />
 }
