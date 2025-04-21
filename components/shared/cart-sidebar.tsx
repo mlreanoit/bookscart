@@ -2,7 +2,10 @@ import useCartStore from '@/hooks/use-cart-store'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import React from 'react'
-import { Button, buttonVariants } from '../ui/button'
+import {
+  //  Button,
+  buttonVariants,
+} from '../ui/button'
 import { Separator } from '../ui/separator'
 import { ScrollArea } from '../ui/scroll-area'
 import Image from 'next/image'
@@ -13,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select'
-import { TrashIcon } from 'lucide-react'
+// import { TrashIcon } from 'lucide-react'
 import useSettingStore from '@/hooks/use-setting-store'
 import ProductPrice from './product/product-price'
 import { useLocale, useTranslations } from 'next-intl'
@@ -23,7 +26,7 @@ export default function CartSidebar() {
   const {
     cart: { items, itemsPrice },
     updateItem,
-    removeItem,
+    // removeItem,
   } = useCartStore()
   const {
     setting: {
@@ -83,7 +86,7 @@ export default function CartSidebar() {
                   <div className='text-sm text-center font-bold'>
                     <ProductPrice price={item.price} plain />
                   </div>
-                  <div className='flex gap-2 mt-2'>
+                  <div className='flex gap-2 mt-2 justify-center'>
                     <Select
                       value={item.quantity.toString()}
                       onValueChange={(value) => {
@@ -103,7 +106,7 @@ export default function CartSidebar() {
                         )}
                       </SelectContent>
                     </Select>
-                    <Button
+                    {/* <Button
                       variant={'outline'}
                       size={'sm'}
                       onClick={() => {
@@ -111,7 +114,7 @@ export default function CartSidebar() {
                       }}
                     >
                       <TrashIcon className='w-4 h-4' />
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
                 <Separator />

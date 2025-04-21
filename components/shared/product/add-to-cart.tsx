@@ -32,6 +32,13 @@ export default function AddToCart({
   const [quantity, setQuantity] = useState(1)
 
   const t = useTranslations()
+  if (item.countInStock === 0) {
+    return (
+      <Button className='rounded-full w-auto' disabled>
+        {t('Product.Out of Stock')}
+      </Button>
+    )
+  }
 
   return minimal ? (
     <Button

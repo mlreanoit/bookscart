@@ -20,5 +20,9 @@ export default function AppInitializer({
     })
   }
 
+  if (!rendered) {
+    return null // or a loader/spinner if needed
+  }
+
   return children
 }
